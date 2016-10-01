@@ -31,13 +31,16 @@ class VacationViewController: UIViewController {
     
     enum Media {
         static var photoArray = ["sindhu_beach.jpg", "grand_canyon.jpg", "underwater.jpg"]
-        static var videoURL = "https://s3.amazonaws.com/ray.wenderlich/elephant_safari.mp4"
+        static let videoURL = "https://s3.amazonaws.com/ray.wenderlich/elephant_safari.mp4"
     }
     
     override func viewDidLoad() {
-    super.viewDidLoad()
-  }
+        super.viewDidLoad()
+        
+        self.imageVRView.load(UIImage.init(named: Media.photoArray.first!), of: GVRPanoramaImageType.mono)
+        self.videoVRView.load(from: URL.init(string: Media.videoURL))
+        
+    }
 
-  
     
 }
