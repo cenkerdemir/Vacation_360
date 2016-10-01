@@ -23,7 +23,21 @@
 import UIKit
 
 class VacationViewController: UIViewController {
-  override func viewDidLoad() {
+    
+    @IBOutlet weak var imageVRView: GVRPanoramaView!
+    @IBOutlet weak var videoVRView: GVRVideoView!
+    @IBOutlet weak var imageLabel: UILabel!
+    @IBOutlet weak var videoLabel: UILabel!
+    
+    enum Media {
+        static var photoArray = ["sindhu_beach.jpg", "grand_canyon.jpg", "underwater.jpg"]
+        static var videoURL = "https://s3.amazonaws.com/ray.wenderlich/elephant_safari.mp4"
+    }
+    
+    override func viewDidLoad() {
     super.viewDidLoad()
   }
+
+  
+    
 }
