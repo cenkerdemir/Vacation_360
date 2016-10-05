@@ -40,7 +40,33 @@ class VacationViewController: UIViewController {
         self.imageVRView.load(UIImage.init(named: Media.photoArray.first!), of: GVRPanoramaImageType.mono)
         self.videoVRView.load(from: URL.init(string: Media.videoURL))
         
+        self.imageVRView.enableCardboardButton = true
+        self.imageVRView.enableFullscreenButton = true
+        
+        self.videoVRView.enableCardboardButton = true
+        self.videoVRView.enableFullscreenButton = true
     }
 
-    
 }
+
+// extension
+extension VacationViewController :GVRWidgetViewDelegate {
+    
+    func widgetView(_ widgetView: GVRWidgetView!, didLoadContent content: Any!) {
+        
+    }
+    
+    func widgetView(_ widgetView: GVRWidgetView!, didFailToLoadContent content: Any!, withErrorMessage errorMessage: String!) {
+        
+    }
+    
+    func widgetView(_ widgetView: GVRWidgetView!, didChange displayMode: GVRWidgetDisplayMode) {
+        
+    }
+    
+    func widgetViewDidTap(_ widgetView: GVRWidgetView!) {
+        
+    }
+}
+
+
