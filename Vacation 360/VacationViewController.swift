@@ -45,6 +45,15 @@ class VacationViewController: UIViewController {
         
         self.videoVRView.enableCardboardButton = true
         self.videoVRView.enableFullscreenButton = true
+        
+        // hide the labels and VRViews, so we can unhide them once the content is loaded successfully. Plus, add the delegates
+        imageLabel.isHidden = true
+        imageVRView.isHidden = true
+        imageVRView.delegate = self
+        
+        videoLabel.isHidden = true
+        videoVRView.isHidden = true
+        videoVRView.delegate = self
     }
 
 }
@@ -53,11 +62,18 @@ class VacationViewController: UIViewController {
 extension VacationViewController :GVRWidgetViewDelegate {
     
     func widgetView(_ widgetView: GVRWidgetView!, didLoadContent content: Any!) {
-        
+        if content is UIImage {
+            imageLabel.isHidden = false
+            imageVRView.isHidden = false
+        }
+        else if content is NSURL {
+            videoLabel.isHidden = false
+            videoVRView.isHidden = false
+        }
     }
     
     func widgetView(_ widgetView: GVRWidgetView!, didFailToLoadContent content: Any!, withErrorMessage errorMessage: String!) {
-        
+        print(errorMessage)
     }
     
     func widgetView(_ widgetView: GVRWidgetView!, didChange displayMode: GVRWidgetDisplayMode) {
