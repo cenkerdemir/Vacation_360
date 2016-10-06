@@ -34,6 +34,9 @@ class VacationViewController: UIViewController {
         static let videoURL = "https://s3.amazonaws.com/ray.wenderlich/elephant_safari.mp4"
     }
     
+    var currenView : UIView?
+    var currentDisplayMode = GVRWidgetDisplayMode.embedded
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,7 +80,8 @@ extension VacationViewController :GVRWidgetViewDelegate {
     }
     
     func widgetView(_ widgetView: GVRWidgetView!, didChange displayMode: GVRWidgetDisplayMode) {
-        
+        currenView = widgetView
+        currentDisplayMode = displayMode
     }
     
     func widgetViewDidTap(_ widgetView: GVRWidgetView!) {
