@@ -37,6 +37,8 @@ class VacationViewController: UIViewController {
     var currentView : UIView?
     var currentDisplayMode = GVRWidgetDisplayMode.embedded
     
+    var isPaused = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,10 +60,22 @@ class VacationViewController: UIViewController {
         videoVRView.isHidden = true
         videoVRView.delegate = self
     }
+    
+    func refreshVideoStatus() {
+        if currentView == videoVRView && currentDisplayMode != GVRWidgetDisplayMode.embedded {
+            videoVRView.resume()
+            isPaused = false
+        }
+        else {
+            videoVRView.pause()
+            isPaused = true
+        }
+    }
+    
 }
 
-// extension
-extension VacationViewController :GVRWidgetViewDelegate {
+// extension for the widget view delegate
+extension VacationViewController : GVRWidgetViewDelegate {
     
     func widgetView(_ widgetView: GVRWidgetView!, didLoadContent content: Any!) {
         if content is UIImage {
@@ -71,7 +85,9 @@ extension VacationViewController :GVRWidgetViewDelegate {
         else if content is NSURL {
             videoLabel.isHidden = false
             videoVRView.isHidden = false
+            refreshVideoStatus()
         }
+        
     }
     
     func widgetView(_ widgetView: GVRWidgetView!, didFailToLoadContent content: Any!, withErrorMessage errorMessage: String!) {
@@ -81,6 +97,7 @@ extension VacationViewController :GVRWidgetViewDelegate {
     func widgetView(_ widgetView: GVRWidgetView!, didChange displayMode: GVRWidgetDisplayMode) {
         currentView = widgetView
         currentDisplayMode = displayMode
+        refreshVideoStatus()
         if currentView == imageVRView && currentDisplayMode != GVRWidgetDisplayMode.embedded {
             view.isHidden = true
         }
@@ -95,6 +112,25 @@ extension VacationViewController :GVRWidgetViewDelegate {
         if currentView == imageVRView {
             Media.photoArray.append(Media.photoArray.removeFirst())
             imageVRView.load(UIImage(named:Media.photoArray.first!), of: GVRPanoramaImageType.mono)
+        }
+        else {
+            if isPaused == true {
+                videoVRView.resume()
+            }
+            else {
+                videoVRView.pause()
+            }
+            isPaused = !isPaused
+        }
+    }
+}
+
+// extension for the video view delegate
+extension VacationViewController : GVRVideoViewDelegate {
+    func videoView(_ videoView: GVRVideoView!, didUpdatePosition position: TimeInterval) {
+        if position >= videoView.duration() {
+            videoView.seek(to: 0)
+            videoView.resume()
         }
     }
 }
