@@ -81,6 +81,12 @@ extension VacationViewController :GVRWidgetViewDelegate {
     func widgetView(_ widgetView: GVRWidgetView!, didChange displayMode: GVRWidgetDisplayMode) {
         currentView = widgetView
         currentDisplayMode = displayMode
+        if currentView == imageVRView && currentDisplayMode != GVRWidgetDisplayMode.embedded {
+            view.isHidden = true
+        }
+        else {
+            view.isHidden = false
+        }
     }
     
     func widgetViewDidTap(_ widgetView: GVRWidgetView!) {
