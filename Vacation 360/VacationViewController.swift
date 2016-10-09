@@ -34,7 +34,7 @@ class VacationViewController: UIViewController {
         static let videoURL = "https://s3.amazonaws.com/ray.wenderlich/elephant_safari.mp4"
     }
     
-    var currenView : UIView?
+    var currentView : UIView?
     var currentDisplayMode = GVRWidgetDisplayMode.embedded
     
     override func viewDidLoad() {
@@ -58,7 +58,6 @@ class VacationViewController: UIViewController {
         videoVRView.isHidden = true
         videoVRView.delegate = self
     }
-
 }
 
 // extension
@@ -80,12 +79,17 @@ extension VacationViewController :GVRWidgetViewDelegate {
     }
     
     func widgetView(_ widgetView: GVRWidgetView!, didChange displayMode: GVRWidgetDisplayMode) {
-        currenView = widgetView
+        currentView = widgetView
         currentDisplayMode = displayMode
     }
     
     func widgetViewDidTap(_ widgetView: GVRWidgetView!) {
+        guard currentDisplayMode != GVRWidgetDisplayMode.embedded else {return}
         
+        if currentView == imageVRView {
+            Media.photoArray.append(Media.photoArray.removeFirst())
+            imageVRView.load(UIImage(named:Media.photoArray.first!), of: GVRPanoramaImageType.mono)
+        }
     }
 }
 
